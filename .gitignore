@@ -1,5 +1,85 @@
-# Input Data 
+# Intermediate Build Files (Temporary)
 scripts/processed/
+scripts/*/geojson/
+scripts/*/topojson/
+2023/processed/
+2019/processed/
+2011/processed/
+public/*/processed/
+**/processed/
 
-# Cruft
+# Large consolidated files (>50MB - exceeds GitHub recommendations)
+# Users can generate these from individual files if needed
+**/municities-all.0.1.json
+**/provdists-all.0.1.json
+
+# Source Shapefiles (Download from UN OCHA)
+phl_shapefiles.zip
+phl_shapefiles_extracted/
+*.zip
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.sbn
+*.sbx
+
+# Build Logs
+*.log
+municities-build.log
+
+# OS-specific files
 .DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+.classpath
+*.sublime-*
+
+# Node.js (if npm packages are installed)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.npm
+.yarn-integrity
+
+# Python (if Python scripts are used)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+.venv
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Claude Code
+.claude/
