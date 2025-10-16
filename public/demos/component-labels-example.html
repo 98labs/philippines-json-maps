@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philippines Map - Labels Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .description {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            margin-top: 0;
+            color: #555;
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 4px;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        .map-with-code {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .map-section {
+            display: flex;
+            flex-direction: column;
+        }
+        .code-section {
+            display: flex;
+            flex-direction: column;
+            background: #2d2d2d;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .section-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+        .code-header {
+            background: #1e1e1e;
+            padding: 15px 20px;
+            border-bottom: 2px solid #555;
+        }
+        .code-header h3 {
+            color: #61dafb;
+            margin: 0;
+            font-size: 1em;
+        }
+        .code-content {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+        .code-content pre {
+            margin: 0;
+            height: 100%;
+        }
+        .code-content pre[class*="language-"] {
+            margin: 0;
+            border-radius: 0;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        @media (max-width: 1200px) {
+            .map-with-code {
+                grid-template-columns: 1fr;
+            }
+            .code-section {
+                max-height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ Philippines Map - Labels & Tooltips</h1>
+
+        <div class="description">
+            <h2>Display Options</h2>
+            <p><strong>Tooltips (Hover):</strong> Hover over any region to see its name and value in a popup.</p>
+            <p><strong>Permanent Labels:</strong> Display labels directly on the map for all regions.</p>
+            <p><strong>Info Panel:</strong> The upper-right panel shows detailed information when hovering.</p>
+        </div>
+
+        <div class="controls">
+            <button onclick="showLabels()">Show Labels</button>
+            <button onclick="hideLabels()">Hide Labels</button>
+            <button onclick="showTooltips()">Enable Tooltips</button>
+            <button onclick="hideTooltips()">Disable Tooltips</button>
+        </div>
+
+        <!-- Example 1: Tooltips on Hover -->
+        <div class="map-with-code">
+            <div class="map-section">
+                <div class="section-title">Example 1: Tooltips on Hover</div>
+                <p class="section-description">Hover over any region to see a popup with the region name and value.</p>
+                <philippines-map
+                    id="map1"
+                    level="1"
+                    title="Philippine Regions"
+                    value-name="Population (millions)"
+                    color-scheme="blue"
+                    height="500px">
+                </philippines-map>
+            </div>
+            <div class="code-section">
+                <div class="code-header">
+                    <h3>📝 HTML Markup</h3>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-markup">&lt;philippines-map
+    id="map1"
+    level="1"
+    title="Philippine Regions"
+    value-name="Population (millions)"
+    color-scheme="blue"
+    height="500px"&gt;
+&lt;/philippines-map&gt;
+
+&lt;script&gt;
+const map1 = document.getElementById('map1');
+
+// Load data when map is ready
+map1.addEventListener('map-ready', () =&gt; {
+    map1.setData({
+        'PH01': 5.3,  // Ilocos Region
+        'PH02': 3.7,  // Cagayan Valley
+        'PH03': 12.4, // Central Luzon
+        'PH04': 16.2, // CALABARZON
+        'PH05': 6.1,  // Bicol Region
+        'PH06': 7.9,  // Western Visayas
+        'PH07': 8.1,  // Central Visayas
+        'PH08': 4.5,  // Eastern Visayas
+        'PH09': 3.8,  // Zamboanga Peninsula
+        'PH10': 5.2,  // Northern Mindanao
+        'PH11': 5.6,  // Davao Region
+        'PH12': 4.9,  // SOCCSKSARGEN
+        'PH13': 13.9, // NCR
+        'PH14': 1.8,  // CAR
+        'PH16': 2.8,  // Caraga
+        'PH17': 3.2,  // MIMAROPA
+        'PH19': 4.1   // BARMM
+    });
+});
+
+// Default behavior: tooltips show on hover
+// No need to set show-tooltips="true"
+&lt;/script&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 2: Permanent Labels -->
+        <div class="map-with-code">
+            <div class="map-section">
+                <div class="section-title">Example 2: Permanent Labels</div>
+                <p class="section-description">Labels are always visible on each region.</p>
+                <philippines-map
+                    id="map2"
+                    level="1"
+                    title="Philippine Regions with Labels"
+                    value-name="GDP (billion PHP)"
+                    color-scheme="green"
+                    show-labels="true"
+                    height="500px">
+                </philippines-map>
+            </div>
+            <div class="code-section">
+                <div class="code-header">
+                    <h3>📝 HTML Markup</h3>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-markup">&lt;philippines-map
+    id="map2"
+    level="1"
+    title="Philippine Regions with Labels"
+    value-name="GDP (billion PHP)"
+    color-scheme="green"
+    show-labels="true"
+    height="500px"&gt;
+&lt;/philippines-map&gt;
+
+&lt;script&gt;
+const map2 = document.getElementById('map2');
+
+// Load data when map is ready
+map2.addEventListener('map-ready', () =&gt; {
+    map2.setData({
+        'PH01': 432.5,  // Ilocos Region
+        'PH02': 286.3,  // Cagayan Valley
+        'PH03': 1876.4, // Central Luzon
+        'PH04': 2453.7, // CALABARZON
+        'PH05': 398.2,  // Bicol Region
+        'PH06': 612.8,  // Western Visayas
+        'PH07': 743.9,  // Central Visayas
+        'PH08': 289.1,  // Eastern Visayas
+        'PH09': 234.6,  // Zamboanga Peninsula
+        'PH10': 412.3,  // Northern Mindanao
+        'PH11': 589.7,  // Davao Region
+        'PH12': 387.2,  // SOCCSKSARGEN
+        'PH13': 7823.6, // NCR
+        'PH14': 156.4,  // CAR
+        'PH16': 234.8,  // Caraga
+        'PH17': 267.3,  // MIMAROPA
+        'PH19': 312.5   // BARMM
+    });
+});
+
+// Toggle labels programmatically
+map2.toggleLabels(true);  // Show labels
+map2.toggleLabels(false); // Hide labels
+&lt;/script&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 3: No Tooltips -->
+        <div class="map-with-code">
+            <div class="map-section">
+                <div class="section-title">Example 3: All Provinces (Info Panel Only)</div>
+                <p class="section-description">Tooltips disabled - hover information shown only in the upper-right info panel.</p>
+                <philippines-map
+                    id="map3"
+                    level="2"
+                    title="All Provinces"
+                    value-name="Population Density"
+                    color-scheme="purple"
+                    show-tooltips="false"
+                    height="500px">
+                </philippines-map>
+            </div>
+            <div class="code-section">
+                <div class="code-header">
+                    <h3>📝 HTML Markup</h3>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-markup">&lt;philippines-map
+    id="map3"
+    level="2"
+    title="All Provinces"
+    value-name="Population Density"
+    color-scheme="purple"
+    show-tooltips="false"
+    height="500px"&gt;
+&lt;/philippines-map&gt;
+
+&lt;script&gt;
+const map3 = document.getElementById('map3');
+
+// Disable tooltips (only info panel shows data)
+// set show-tooltips="false" in HTML
+
+// Or toggle programmatically:
+map3.toggleTooltips(false); // Disable tooltips
+map3.toggleTooltips(true);  // Enable tooltips
+
+// Combine labels and tooltips:
+map3.toggleLabels(true);    // Show permanent labels
+map3.toggleTooltips(false); // Disable hover tooltips
+
+// Listen to events
+map3.addEventListener('region-click', (event) =&gt; {
+    const feature = event.detail.feature;
+    console.log('Clicked province:', feature.ADM2_EN);
+});
+&lt;/script&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the web component -->
+    <script src="../components/philippines-map.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+
+    <script>
+        const map1 = document.getElementById('map1');
+        const map2 = document.getElementById('map2');
+        const map3 = document.getElementById('map3');
+
+        // Sample data for map 1
+        map1.addEventListener('map-ready', () => {
+            map1.setData({
+                'PH01': 5.3,
+                'PH02': 3.7,
+                'PH03': 12.4,
+                'PH04': 16.2,
+                'PH05': 6.1,
+                'PH06': 7.9,
+                'PH07': 8.1,
+                'PH08': 4.5,
+                'PH09': 3.8,
+                'PH10': 5.2,
+                'PH11': 5.6,
+                'PH12': 4.9,
+                'PH13': 13.9,
+                'PH14': 1.8,
+                'PH16': 2.8,
+                'PH17': 3.2,
+                'PH19': 4.1
+            });
+        });
+
+        // Sample data for map 2
+        map2.addEventListener('map-ready', () => {
+            map2.setData({
+                'PH01': 432.5,
+                'PH02': 286.3,
+                'PH03': 1876.4,
+                'PH04': 2453.7,
+                'PH05': 398.2,
+                'PH06': 612.8,
+                'PH07': 743.9,
+                'PH08': 289.1,
+                'PH09': 234.6,
+                'PH10': 412.3,
+                'PH11': 589.7,
+                'PH12': 387.2,
+                'PH13': 7823.6,
+                'PH14': 156.4,
+                'PH16': 234.8,
+                'PH17': 267.3,
+                'PH19': 312.5
+            });
+        });
+
+        // Control functions
+        function showLabels() {
+            map1.toggleLabels(true);
+            map2.toggleLabels(true);
+            map3.toggleLabels(true);
+        }
+
+        function hideLabels() {
+            map1.toggleLabels(false);
+            map2.toggleLabels(false);
+            map3.toggleLabels(false);
+        }
+
+        function showTooltips() {
+            map1.toggleTooltips(true);
+            map2.toggleTooltips(true);
+            map3.toggleTooltips(true);
+        }
+
+        function hideTooltips() {
+            map1.toggleTooltips(false);
+            map2.toggleTooltips(false);
+            map3.toggleTooltips(false);
+        }
+
+        // Log events
+        [map1, map2, map3].forEach((map, index) => {
+            map.addEventListener('region-click', (event) => {
+                const feature = event.detail.feature;
+                console.log(`Map ${index + 1} - Clicked:`, feature.ADM1_EN || feature.ADM2_EN);
+            });
+
+            map.addEventListener('data-updated', (event) => {
+                console.log(`Map ${index + 1} - Data updated:`, Object.keys(event.detail.data).length, 'records');
+            });
+        });
+    </script>
+</body>
+</html>

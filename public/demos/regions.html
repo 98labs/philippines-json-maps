@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philippines Cartogram - All Provinces/Districts</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        #map {
+            flex: 1;
+            height: 100vh;
+        }
+        #code-panel {
+            width: 50%;
+            background: #2d2d2d;
+            color: #ccc;
+            overflow-y: auto;
+            border-left: 3px solid #555;
+            transition: transform 0.3s ease;
+        }
+        #code-panel.hidden {
+            transform: translateX(100%);
+            position: absolute;
+            right: 0;
+            height: 100vh;
+        }
+        .code-header {
+            background: #1e1e1e;
+            padding: 15px 20px;
+            border-bottom: 2px solid #555;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .code-header h3 {
+            color: #61dafb;
+            margin-bottom: 5px;
+        }
+        .code-header p {
+            color: #888;
+            font-size: 14px;
+        }
+        .code-content {
+            padding: 0;
+        }
+        pre[class*="language-"] {
+            margin: 0;
+            border-radius: 0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .toggle-code {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: #2d2d2d;
+            color: white;
+            border: 2px solid #61dafb;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        .toggle-code:hover {
+            background: #61dafb;
+            color: #2d2d2d;
+        }
+        .toggle-code.code-visible {
+            right: calc(50% + 20px);
+            transform: translateY(-50%);
+        }
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+        .legend {
+            line-height: 18px;
+            color: #555;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+        .resolution-control {
+            padding: 10px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        .resolution-control label {
+            font-weight: bold;
+            color: #777;
+            margin-right: 8px;
+        }
+        .resolution-control select {
+            padding: 5px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            background: white;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            #code-panel {
+                width: 100%;
+            }
+            .toggle-code.code-visible {
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-code" onclick="toggleCode()">Show Code</button>
+
+    <div class="container">
+        <div id="map"></div>
+        <div id="code-panel" class="hidden">
+            <div class="code-header">
+                <h3>📝 Source Code</h3>
+                <p>Interactive demo showing all 88 Philippine provinces/districts with resolution selector</p>
+            </div>
+            <div class="code-content">
+                <pre><code class="language-javascript">// Initialize map centered on Philippines
+        var map = L.map('map').setView([12.8797, 121.7740], 6);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&amp;copy; &lt;a href="https://www.openstreetmap.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Color function based on value
+        function getColor(d) {
+            return d &gt; 80 ? '#006837' :
+                   d &gt; 70 ? '#31A354' :
+                   d &gt; 60 ? '#78C679' :
+                   d &gt; 50 ? '#ADDD8E' :
+                   d &gt; 40 ? '#D9F0A3' :
+                   d &gt; 30 ? '#F7FCB9' :
+                   d &gt; 20 ? '#FFFFE5' :
+                            '#FFFFCC';
+        }
+
+        // Style function
+        function style(feature) {
+            return {
+                fillColor: getColor(feature.properties.randomValue),
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.7
+            };
+        }
+
+        // Highlight feature on hover
+        function highlightFeature(e) {
+            var layer = e.target;
+
+            layer.setStyle({
+                weight: 5,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.7
+            });
+
+            layer.bringToFront();
+            info.update(layer.feature.properties);
+        }
+
+        var geojsonLayer;
+
+        // Reset highlight
+        function resetHighlight(e) {
+            if (geojsonLayer) {
+                geojsonLayer.resetStyle(e.target);
+            }
+            info.update();
+        }
+
+        // Zoom to feature on click
+        function zoomToFeature(e) {
+            map.fitBounds(e.target.getBounds());
+        }
+
+        // Attach events to each feature
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: zoomToFeature
+            });
+        }
+
+        var currentResolution = 'lowres';
+
+        // Resolution to file suffix mapping
+        var resolutionMap = {
+            'lowres': '0.001',
+            'medres': '0.01',
+            'hires': '0.1'
+        };
+
+        // Load all provinces data based on resolution
+        function loadData(resolution) {
+            var suffix = resolutionMap[resolution];
+            var url = `../2023/provdists-all.${suffix}.json`;
+
+            // Remove existing layer if present
+            if (geojsonLayer) {
+                map.removeLayer(geojsonLayer);
+            }
+
+            fetch(url)
+                .then(response =&gt; response.json())
+                .then(data =&gt; {
+                    // Assign random values to each feature
+                    data.features.forEach(feature =&gt; {
+                        feature.properties.randomValue = Math.floor(Math.random() * 100);
+                    });
+
+                    geojsonLayer = L.geoJson(data, {
+                        style: style,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
+
+                    // Fit map to data bounds
+                    map.fitBounds(geojsonLayer.getBounds());
+                })
+                .catch(error =&gt; console.error('Error loading GeoJSON:', error));
+        }
+
+        // Initial load
+        loadData(currentResolution);
+
+        // Info control
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+
+        info.update = function (props) {
+            this._div.innerHTML = '&lt;h4&gt;All Provinces/Districts (88)&lt;/h4&gt;' +
+                (props ?
+                '&lt;b&gt;' + props.ADM2_EN + '&lt;/b&gt;&lt;br /&gt;' +
+                'Random Value: ' + props.randomValue.toFixed(2) + '&lt;br /&gt;' +
+                'Area: ' + (props.AREA_SQKM ? props.AREA_SQKM.toFixed(2) : 'N/A') + ' km²'
+                : 'Hover over a province/district');
+        };
+
+        info.addTo(map);
+
+        // Legend control
+        var legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend'),
+                grades = [0, 20, 30, 40, 50, 60, 70, 80],
+                labels = [];
+
+            div.innerHTML = '&lt;h4&gt;Random Value&lt;/h4&gt;';
+
+            for (var i = 0; i &lt; grades.length; i++) {
+                div.innerHTML +=
+                    '&lt;i style="background:' + getColor(grades[i] + 1) + '"&gt;&lt;/i&gt; ' +
+                    grades[i] + (grades[i + 1] ? '&amp;ndash;' + grades[i + 1] + '&lt;br&gt;' : '+');
+            }
+
+            return div;
+        };
+
+        legend.addTo(map);
+
+        // Resolution control
+        var resolutionControl = L.control({position: 'topleft'});
+
+        resolutionControl.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'resolution-control');
+            div.innerHTML = `
+                &lt;label for="resolution-select"&gt;Resolution:&lt;/label&gt;
+                &lt;select id="resolution-select"&gt;
+                    &lt;option value="lowres" selected&gt;Low (fast)&lt;/option&gt;
+                    &lt;option value="medres"&gt;Medium&lt;/option&gt;
+                    &lt;option value="hires"&gt;High (detailed)&lt;/option&gt;
+                &lt;/select&gt;
+            `;
+
+            // Prevent map clicks on the control
+            L.DomEvent.disableClickPropagation(div);
+
+            return div;
+        };
+
+        resolutionControl.addTo(map);
+
+        // Add change event listener to resolution selector
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var selector = document.getElementById('resolution-select');
+                if (selector) {
+                    selector.addEventListener('change', function(e) {
+                        currentResolution = e.target.value;
+                        loadData(currentResolution);
+                    });
+                }
+            }, 100);
+        });</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script>
+        // Toggle code panel
+        function toggleCode() {
+            var panel = document.getElementById('code-panel');
+            var btn = document.querySelector('.toggle-code');
+
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                btn.classList.add('code-visible');
+                btn.textContent = 'Hide Code';
+            } else {
+                panel.classList.add('hidden');
+                btn.classList.remove('code-visible');
+                btn.textContent = 'Show Code';
+            }
+        }
+
+        // Initialize map centered on Philippines
+        var map = L.map('map').setView([12.8797, 121.7740], 6);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Color function based on value
+        function getColor(d) {
+            return d > 80 ? '#006837' :
+                   d > 70 ? '#31A354' :
+                   d > 60 ? '#78C679' :
+                   d > 50 ? '#ADDD8E' :
+                   d > 40 ? '#D9F0A3' :
+                   d > 30 ? '#F7FCB9' :
+                   d > 20 ? '#FFFFE5' :
+                            '#FFFFCC';
+        }
+
+        // Style function
+        function style(feature) {
+            return {
+                fillColor: getColor(feature.properties.randomValue),
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.7
+            };
+        }
+
+        // Highlight feature on hover
+        function highlightFeature(e) {
+            var layer = e.target;
+
+            layer.setStyle({
+                weight: 5,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.7
+            });
+
+            layer.bringToFront();
+            info.update(layer.feature.properties);
+        }
+
+        var geojsonLayer;
+
+        // Reset highlight
+        function resetHighlight(e) {
+            if (geojsonLayer) {
+                geojsonLayer.resetStyle(e.target);
+            }
+            info.update();
+        }
+
+        // Zoom to feature on click
+        function zoomToFeature(e) {
+            map.fitBounds(e.target.getBounds());
+        }
+
+        // Attach events to each feature
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: zoomToFeature
+            });
+        }
+
+        var currentResolution = 'lowres';
+
+        // Resolution to file suffix mapping
+        var resolutionMap = {
+            'lowres': '0.001',
+            'medres': '0.01',
+            'hires': '0.1'
+        };
+
+        // Load all provinces data based on resolution
+        function loadData(resolution) {
+            var suffix = resolutionMap[resolution];
+            var url = `../2023/provdists-all.${suffix}.json`;
+
+            // Remove existing layer if present
+            if (geojsonLayer) {
+                map.removeLayer(geojsonLayer);
+            }
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Assign random values to each feature
+                    data.features.forEach(feature => {
+                        feature.properties.randomValue = Math.floor(Math.random() * 100);
+                    });
+
+                    geojsonLayer = L.geoJson(data, {
+                        style: style,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
+
+                    // Fit map to data bounds
+                    map.fitBounds(geojsonLayer.getBounds());
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+
+        // Initial load
+        loadData(currentResolution);
+
+        // Info control
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+
+        info.update = function (props) {
+            this._div.innerHTML = '<h4>All Provinces/Districts (88)</h4>' +
+                (props ?
+                '<b>' + props.ADM2_EN + '</b><br />' +
+                'Random Value: ' + props.randomValue.toFixed(2) + '<br />' +
+                'Area: ' + (props.AREA_SQKM ? props.AREA_SQKM.toFixed(2) : 'N/A') + ' km²'
+                : 'Hover over a province/district');
+        };
+
+        info.addTo(map);
+
+        // Legend control
+        var legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend'),
+                grades = [0, 20, 30, 40, 50, 60, 70, 80],
+                labels = [];
+
+            div.innerHTML = '<h4>Random Value</h4>';
+
+            for (var i = 0; i < grades.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+            }
+
+            return div;
+        };
+
+        legend.addTo(map);
+
+        // Resolution control
+        var resolutionControl = L.control({position: 'topleft'});
+
+        resolutionControl.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'resolution-control');
+            div.innerHTML = `
+                <label for="resolution-select">Resolution:</label>
+                <select id="resolution-select">
+                    <option value="lowres" selected>Low (fast)</option>
+                    <option value="medres">Medium</option>
+                    <option value="hires">High (detailed)</option>
+                </select>
+            `;
+
+            // Prevent map clicks on the control
+            L.DomEvent.disableClickPropagation(div);
+
+            return div;
+        };
+
+        resolutionControl.addTo(map);
+
+        // Add change event listener to resolution selector
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var selector = document.getElementById('resolution-select');
+                if (selector) {
+                    selector.addEventListener('change', function(e) {
+                        currentResolution = e.target.value;
+                        loadData(currentResolution);
+                    });
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

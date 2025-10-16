@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philippines Map Web Component - Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        select, input, button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background: #5568d3;
+        }
+
+        .map-with-code {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .map-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .code-section {
+            display: flex;
+            flex-direction: column;
+            background: #2d2d2d;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .code-header {
+            background: #1e1e1e;
+            padding: 15px 20px;
+            border-bottom: 2px solid #555;
+        }
+
+        .code-header h3 {
+            color: #61dafb;
+            margin: 0;
+            font-size: 1em;
+        }
+
+        .code-content {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 600px;
+        }
+
+        .code-content pre {
+            margin: 0;
+            height: 100%;
+        }
+
+        .code-content pre[class*="language-"] {
+            margin: 0;
+            border-radius: 0;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .info-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .info-panel h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .info-panel pre {
+            background: #f8f8f8;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 1200px) {
+            .map-with-code {
+                grid-template-columns: 1fr;
+            }
+            .code-section {
+                max-height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ Philippines Map Web Component</h1>
+        <p class="subtitle">Interactive examples demonstrating the reusable web component</p>
+
+        <!-- Controls -->
+        <div class="controls">
+            <h3>Map Configuration</h3>
+            <div class="control-group">
+                <label>Level:</label>
+                <select id="levelSelect">
+                    <option value="1">Level 1 - Regions (17)</option>
+                    <option value="2">Level 2 - Provinces (88)</option>
+                    <option value="3">Level 3 - Municipalities (1,642)</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Color Scheme:</label>
+                <select id="colorSelect">
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="red">Red</option>
+                    <option value="purple">Purple</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Title:</label>
+                <input type="text" id="titleInput" value="Philippines Map" style="width: 300px;">
+            </div>
+            <div class="control-group">
+                <label>Value Name:</label>
+                <input type="text" id="valueInput" value="Random Value" style="width: 300px;">
+            </div>
+            <div class="control-group">
+                <label>Display Options:</label>
+                <label style="width: auto; font-weight: normal;">
+                    <input type="checkbox" id="showLabelsCheck" onchange="toggleLabels()"> Show Labels
+                </label>
+                <label style="width: auto; font-weight: normal; margin-left: 15px;">
+                    <input type="checkbox" id="showTooltipsCheck" checked onchange="toggleTooltips()"> Show Tooltips (Hover)
+                </label>
+            </div>
+            <div class="control-group">
+                <label></label>
+                <button onclick="updateMap()">Update Map</button>
+                <button onclick="loadSampleData()">Load Sample Data</button>
+                <button onclick="resetMap()">Reset to Random</button>
+            </div>
+        </div>
+
+        <!-- Example 1: Main Map with Code -->
+        <div class="map-with-code">
+            <div class="map-section">
+                <div class="section-title">Example 1: Dynamic Map</div>
+                <philippines-map
+                    id="mainMap"
+                    level="1"
+                    title="Philippines Regions"
+                    value-name="Random Value"
+                    color-scheme="blue"
+                    height="600px">
+                </philippines-map>
+            </div>
+            <div class="code-section">
+                <div class="code-header">
+                    <h3>📝 HTML Markup</h3>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-markup">&lt;philippines-map
+    id="mainMap"
+    level="1"
+    title="Philippines Regions"
+    value-name="Random Value"
+    color-scheme="blue"
+    height="600px"&gt;
+&lt;/philippines-map&gt;
+
+&lt;script&gt;
+const mainMap = document.getElementById('mainMap');
+
+// Listen to events
+mainMap.addEventListener('region-click', (event) =&gt; {
+    const feature = event.detail.feature;
+    console.log('Clicked:', feature.ADM1_EN);
+});
+
+mainMap.addEventListener('map-ready', (event) =&gt; {
+    console.log('Map ready with', event.detail.features.length, 'features');
+});
+
+// Update map attributes dynamically
+mainMap.setAttribute('level', '2');
+mainMap.setAttribute('color-scheme', 'green');
+
+// Load custom data
+mainMap.setData({
+    'PH01': 85.5,
+    'PH02': 72.3,
+    'PH03': 91.2
+});
+&lt;/script&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 2: Provinces -->
+        <div class="map-with-code">
+            <div class="map-section">
+                <div class="section-title">Example 2: All Provinces (Green)</div>
+                <philippines-map
+                    id="provinceMap"
+                    level="2"
+                    title="All Provinces"
+                    value-name="Sample Data"
+                    color-scheme="green"
+                    height="400px">
+                </philippines-map>
+            </div>
+            <div class="code-section">
+                <div class="code-header">
+                    <h3>📝 HTML Markup</h3>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-markup">&lt;philippines-map
+    level="2"
+    title="All Provinces"
+    value-name="Sample Data"
+    color-scheme="green"
+    height="400px"&gt;
+&lt;/philippines-map&gt;
+
+&lt;script&gt;
+// Province-level example (Level 2)
+// Uses combined file: provdists-all.0.001.json
+// Contains all 88 provinces/districts
+
+const provinceMap = document.querySelector('philippines-map[level="2"]');
+
+// Load province-specific data
+provinceMap.addEventListener('map-ready', () =&gt; {
+    provinceMap.setData({
+        'PH01028': 75,  // Ilocos Norte
+        'PH01029': 82,  // Ilocos Sur
+        'PH02009': 68   // Batanes
+    });
+});
+&lt;/script&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 3: Municipalities -->
+        <div class="map-with-code">
+            <div class="map-section">
+                <div class="section-title">Example 3: All Municipalities (Purple)</div>
+                <philippines-map
+                    id="muniMap"
+                    level="3"
+                    title="All Municipalities"
+                    value-name="Population Density"
+                    color-scheme="purple"
+                    height="400px">
+                </philippines-map>
+            </div>
+            <div class="code-section">
+                <div class="code-header">
+                    <h3>📝 HTML Markup</h3>
+                </div>
+                <div class="code-content">
+                    <pre><code class="language-markup">&lt;philippines-map
+    level="3"
+    title="All Municipalities"
+    value-name="Population Density"
+    color-scheme="purple"
+    height="400px"&gt;
+&lt;/philippines-map&gt;
+
+&lt;script&gt;
+// Municipality-level example (Level 3)
+// Uses combined file: municities-all.0.001.json
+// Contains all 1,642 municipalities/cities
+
+const muniMap = document.querySelector('philippines-map[level="3"]');
+
+// Load municipality-specific data
+muniMap.addEventListener('map-ready', () =&gt; {
+    muniMap.setData({
+        'ph0102801': 92,  // Example municipality
+        'ph0102802': 85,
+        'ph0102803': 78
+    });
+});
+&lt;/script&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <h3>Event Log</h3>
+            <pre id="eventLog">Waiting for events...</pre>
+        </div>
+    </div>
+
+    <!-- Load the web component -->
+    <script src="../components/philippines-map.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+
+    <script>
+        // Get reference to main map
+        const mainMap = document.getElementById('mainMap');
+
+        // Listen to events
+        mainMap.addEventListener('region-click', (event) => {
+            const feature = event.detail.feature;
+            logEvent('Region Clicked', {
+                name: feature.ADM1_EN || feature.ADM2_EN || feature.ADM3_EN,
+                code: feature.ADM1_PCODE || feature.ADM2_PCODE || feature.ADM3_PCODE,
+                value: feature.dataValue,
+                area: feature.AREA_SQKM
+            });
+        });
+
+        mainMap.addEventListener('map-ready', (event) => {
+            logEvent('Map Ready', {
+                features: event.detail.features.length
+            });
+        });
+
+        mainMap.addEventListener('data-updated', (event) => {
+            logEvent('Data Updated', {
+                records: Object.keys(event.detail.data).length
+            });
+        });
+
+        // Update map based on controls
+        function updateMap() {
+            const level = document.getElementById('levelSelect').value;
+            const color = document.getElementById('colorSelect').value;
+            const title = document.getElementById('titleInput').value;
+            const valueName = document.getElementById('valueInput').value;
+
+            mainMap.setAttribute('level', level);
+            mainMap.setAttribute('color-scheme', color);
+            mainMap.setAttribute('title', title);
+            mainMap.setAttribute('value-name', valueName);
+
+            logEvent('Map Configuration Updated', {
+                level, color, title, valueName
+            });
+        }
+
+        // Load sample data
+        function loadSampleData() {
+            const level = mainMap.getAttribute('level');
+
+            // Generate sample data based on level
+            const sampleData = {};
+
+            if (level === '1') {
+                // Region codes
+                const regions = ['PH01', 'PH02', 'PH03', 'PH04', 'PH05', 'PH06',
+                                'PH07', 'PH08', 'PH09', 'PH10', 'PH11', 'PH12',
+                                'PH13', 'PH14', 'PH16', 'PH17', 'PH19'];
+                regions.forEach(code => {
+                    sampleData[code] = Math.floor(Math.random() * 100);
+                });
+            } else if (level === '2') {
+                // Sample province codes
+                const provinces = ['PH01028', 'PH01029', 'PH02009', 'PH03008', 'PH04010'];
+                provinces.forEach(code => {
+                    sampleData[code] = Math.floor(Math.random() * 100);
+                });
+            } else if (level === '3') {
+                // Sample municipality codes
+                const municipalities = ['ph0102801', 'ph0102802', 'ph0102803'];
+                municipalities.forEach(code => {
+                    sampleData[code] = Math.floor(Math.random() * 100);
+                });
+            }
+
+            mainMap.setData(sampleData);
+            logEvent('Sample Data Loaded', sampleData);
+        }
+
+        // Reset to random data
+        function resetMap() {
+            mainMap.setAttribute('data', '{}');
+            // Trigger reload by changing level temporarily
+            const currentLevel = mainMap.getAttribute('level');
+            mainMap.setAttribute('level', currentLevel === '1' ? '2' : '1');
+            setTimeout(() => {
+                mainMap.setAttribute('level', currentLevel);
+            }, 10);
+            logEvent('Map Reset', { status: 'Random data restored' });
+        }
+
+        // Log events to panel
+        function logEvent(eventName, data) {
+            const log = document.getElementById('eventLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = `[${timestamp}] ${eventName}
+${JSON.stringify(data, null, 2)}
+
+`;
+            log.textContent = entry + log.textContent;
+        }
+
+        // Toggle labels
+        function toggleLabels() {
+            const show = document.getElementById('showLabelsCheck').checked;
+            mainMap.toggleLabels(show);
+            logEvent('Labels Toggled', { enabled: show });
+        }
+
+        // Toggle tooltips
+        function toggleTooltips() {
+            const show = document.getElementById('showTooltipsCheck').checked;
+            mainMap.toggleTooltips(show);
+            logEvent('Tooltips Toggled', { enabled: show });
+        }
+
+        // Log initial load
+        logEvent('Page Loaded', {
+            component: 'philippines-map',
+            version: '1.0.0'
+        });
+    </script>
+</body>
+</html>
