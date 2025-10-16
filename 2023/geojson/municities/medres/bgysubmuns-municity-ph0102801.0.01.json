@@ -1,0 +1,3 @@
+{"type":"FeatureCollection", "features": [
+{"type":"Feature","geometry":null,"properties":{"ADM4_EN":"Adams (Pob.)","ADM4_PCODE":"PH0102801001","ADM4_REF":null,"ADM3_EN":"Adams","ADM3_PCODE":"PH0102801","ADM2_EN":"Ilocos Norte","ADM2_PCODE":"PH01028","ADM1_EN":"Region I (Ilocos Region)","ADM1_PCODE":"PH01","ADM0_EN":"Philippines (the)","ADM0_PCODE":"PH","date":"2022/11/09","validOn":"2023/11/06","validTo":null,"Shape_Leng":0.423603921113,"Shape_Area":0.00950603858364,"AREA_SQKM":111.143026054},"id":"PH0102801001"}
+]}
