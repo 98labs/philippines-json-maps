@@ -72,21 +72,14 @@ Once downloaded, you can regenerate the maps using the build scripts:
 ```bash
 cd scripts
 
-# Option 1: Use -fixed scripts for OCHA data (recommended)
-./topojson-country.sh
-./topojson-regions-fixed.sh
-./topojson-provdists-fixed.sh
-./topojson-municities-fixed.sh
-
-# Option 2: Use original scripts for PSGC shapefiles
-# (Only if you have shapefiles with adm*_psgc field names)
+# Use scripts for OCHA data
 ./topojson-country.sh
 ./topojson-regions.sh
 ./topojson-provdists.sh
 ./topojson-municities.sh
 ```
 
-**Build Time**: Approximately 23 minutes total
+**Build Time**: Approximately 30 minutes total
 
 ## 🔄 Alternative Sources
 
