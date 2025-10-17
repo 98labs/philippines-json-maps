@@ -159,10 +159,10 @@ Major release with interactive demos, web components, and comprehensive document
   - `public/demos/provinces-data.js` (7.1KB) - JavaScript array of all 88 provinces with codes and regions
   - `public/demos/municipalities-data.js` (105KB) - JavaScript array of all 1,642 municipalities with codes and provinces
 
-- **Metadata Directory** (`metadata/`):
-  - `metadata/municipalities.csv` (54KB) - Complete list of all 1,642 municipalities/cities with PCODE, names, and parent province codes
-  - `metadata/provinces.csv` (4.4KB) - Complete list of all 88 provinces/districts with PCODE, names, and parent region codes
-  - `metadata/README.md` (5KB) - Metadata documentation with usage examples in JavaScript, Python, Node.js, and Excel
+- **Metadata Directory** (`public/metadata/`):
+  - `public/metadata/municipalities.csv` (54KB) - Complete list of all 1,642 municipalities/cities with PCODE, names, and parent province codes
+  - `public/metadata/provinces.csv` (4.4KB) - Complete list of all 88 provinces/districts with PCODE, names, and parent region codes
+  - `public/metadata/README.md` (5KB) - Metadata documentation with usage examples in JavaScript, Python, Node.js, and Excel
   - Organized in dedicated folder for better project structure
   - Useful for dropdowns, lookups, data joining, and validation
 
@@ -258,9 +258,6 @@ philippines-json-maps/
 ├── DEMO_GUIDE.md (NEW - 28KB)
 ├── DEPLOYMENT_GUIDE.md (NEW - 26KB)
 ├── BUILD_SUMMARY.md (NEW - 5KB)
-├── metadata/ (NEW)
-│   ├── municipalities.csv (NEW - 54KB)
-│   └── provinces.csv (NEW - 4.4KB)
 ├── municities-build.log (Build process log)
 ├── phl_shapefiles.zip (Source data - 882MB)
 ├── 2023/
@@ -298,6 +295,10 @@ philippines-json-maps/
 │   ├── 2023/ (Symlink or copy of selected 2023 files)
 │   ├── components/
 │   │   └── philippines-map.js (NEW - 18KB)
+│   ├── metadata/ (NEW)
+│   │   ├── municipalities.csv (NEW - 54KB)
+│   │   ├── provinces.csv (NEW - 4.4KB)
+│   │   └── README.md (NEW - Metadata documentation)
 │   └── demos/
 │       ├── index.html (Demo gallery)
 │       ├── country.html (Resolution selector & code viewer)
@@ -552,9 +553,9 @@ Initial legacy release with 2011 data.
 | provinces-data.js | 1 | 7 KB | Province lookup data (public/demos) |
 | municipalities-data.js | 1 | 108 KB | Municipality lookup data (public/demos) |
 | **Metadata Directory** | | | |
-| metadata/municipalities.csv | 1 | 54 KB | Municipality metadata (all fields) |
-| metadata/provinces.csv | 1 | 4 KB | Province metadata (all fields) |
-| metadata/README.md | 1 | 5 KB | Metadata documentation and usage examples |
+| public/metadata/municipalities.csv | 1 | 54 KB | Municipality metadata (all fields) |
+| public/metadata/provinces.csv | 1 | 4 KB | Province metadata (all fields) |
+| public/metadata/README.md | 1 | 5 KB | Metadata documentation and usage examples |
 | **Build Scripts** | 3 | ~12 KB | Fixed scripts for OCHA data |
 | **Total New/Modified** | **30** | **~127 MB** | Excluding map generation |
 

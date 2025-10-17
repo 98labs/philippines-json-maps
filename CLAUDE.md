@@ -32,9 +32,6 @@ philippines-json-maps/
 ├── 2011/                    # Legacy maps (2011 data)
 ├── public/                  # Web demos and components
 ├── scripts/                 # Build scripts
-├── metadata/                # Administrative unit metadata (CSV)
-│   ├── municipalities.csv  # All 1,642 municipalities/cities
-│   └── provinces.csv       # All 88 provinces/districts
 ├── phl_shapefiles_extracted/  # Extracted source shapefiles
 ├── phl_shapefiles.zip      # Source shapefile archive (882 MB)
 ├── municities-build.log    # Build process log
@@ -89,6 +86,10 @@ public/
 │   └── README.md                # Demo documentation
 ├── components/
 │   └── philippines-map.js       # Reusable web component (18 KB)
+├── metadata/                    # Administrative unit metadata (CSV)
+│   ├── municipalities.csv      # All 1,642 municipalities/cities
+│   ├── provinces.csv           # All 88 provinces/districts
+│   └── README.md               # Metadata documentation
 └── 2023/                        # Symlink or copy of 2023 data
 ```
 
@@ -291,10 +292,10 @@ The repository includes several documentation files:
 
 ## Metadata Directory
 
-Administrative unit metadata is available in the `metadata/` directory:
+Administrative unit metadata is available in the `public/metadata/` directory:
 
-- **metadata/municipalities.csv** - All 1,642 municipalities/cities with PCODE, names, and parent codes
-- **metadata/provinces.csv** - All 88 provinces/districts with PCODE, names, and parent region codes
+- **public/metadata/municipalities.csv** - All 1,642 municipalities/cities with PCODE, names, and parent codes
+- **public/metadata/provinces.csv** - All 88 provinces/districts with PCODE, names, and parent region codes
 
 These CSV files are useful for:
 - Building dropdowns and selection menus
@@ -399,9 +400,9 @@ Each file has 3 resolutions × 2 formats (GeoJSON + TopoJSON) = 6 variants
 
 **Metadata files**:
 ```
-metadata/municipalities.csv         # All 1,642 municipalities with PCODE and names (54 KB)
-metadata/provinces.csv              # All 88 provinces with PCODE and names (4.4 KB)
-metadata/README.md                  # Metadata documentation and usage examples
+public/metadata/municipalities.csv         # All 1,642 municipalities with PCODE and names (54 KB)
+public/metadata/provinces.csv              # All 88 provinces with PCODE and names (4.4 KB)
+public/metadata/README.md                  # Metadata documentation and usage examples
 ```
 
 ### Region Codes (PCODE)

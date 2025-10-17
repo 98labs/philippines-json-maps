@@ -425,7 +425,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 📁 Metadata Files
 
-Administrative unit metadata is available in CSV format in the `metadata/` directory:
+Administrative unit metadata is available in CSV format in the `public/metadata/` directory:
 
 | File | Description | Records | Use Case |
 |------|-------------|---------|----------|
@@ -441,7 +441,7 @@ Administrative unit metadata is available in CSV format in the `metadata/` direc
 **Usage Example**:
 ```javascript
 // Load municipality data
-fetch('metadata/municipalities.csv')
+fetch('public/metadata/municipalities.csv')
     .then(response => response.text())
     .then(csv => {
         // Parse CSV and use for lookups

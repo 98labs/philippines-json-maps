@@ -19,6 +19,10 @@ public/
 │   ├── provinces-data.js         # Province lookup data (7KB)
 │   ├── municipalities-data.js    # Municipality lookup data (105KB)
 │   └── README.md
+├── metadata/               # Administrative unit metadata (CSV)
+│   ├── municipalities.csv  # All 1,642 municipalities with PCODE and names
+│   ├── provinces.csv       # All 88 provinces with PCODE and names
+│   └── README.md           # Metadata documentation
 └── 2023/                   # GeoJSON/TopoJSON data (489 MB)
     ├── provdists-all.0.001.json        # All provinces (620KB)
     ├── municities-all.0.001.json       # All municipalities (1.8MB)
@@ -92,6 +96,7 @@ See [DEPLOYMENT_GUIDE.md](../DEPLOYMENT_GUIDE.md) for detailed instructions.
 | Demos | 13 | ~200 KB | HTML files with resolution selector |
 | Components | 1 | 18 KB | Web component JS |
 | Helper Data | 2 | 112 KB | Lookup tables |
+| Metadata (CSV) | 2 | 58 KB | Municipality and province metadata |
 | Combined Files (lowres) | 2 | 2.4 MB | All provinces & municipalities |
 | Combined Files (medres) | 2 | 12.7 MB | All provinces & municipalities |
 | Combined Files (hires) | 2 | 107 MB | All provinces & municipalities |

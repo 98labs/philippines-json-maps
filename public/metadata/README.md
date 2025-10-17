@@ -72,7 +72,7 @@ ph13,National Capital Region,ph13,National Capital Region
 
 ```javascript
 // Load municipalities
-fetch('metadata/municipalities.csv')
+fetch('public/metadata/municipalities.csv')
     .then(response => response.text())
     .then(csvText => {
         const rows = csvText.split('\n');
@@ -94,7 +94,7 @@ fetch('metadata/municipalities.csv')
 import pandas as pd
 
 # Load municipalities
-municipalities = pd.read_csv('metadata/municipalities.csv')
+municipalities = pd.read_csv('public/metadata/municipalities.csv')
 print(municipalities.head())
 
 # Filter by region
@@ -114,7 +114,7 @@ const csv = require('csv-parser');
 
 const municipalities = [];
 
-fs.createReadStream('metadata/municipalities.csv')
+fs.createReadStream('public/metadata/municipalities.csv')
     .pipe(csv())
     .on('data', (row) => {
         municipalities.push(row);
