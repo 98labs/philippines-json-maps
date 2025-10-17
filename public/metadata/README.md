@@ -184,4 +184,4 @@ Country (Philippines)
 
 These metadata files are updated when new PSGC data is released by PSA, typically quarterly. Check the [PSA website](https://psa.gov.ph/classification/psgc/) for the latest PSGC updates.
 
-For questions or corrections, please [open an issue](https://github.com/faeldon/philippines-json-maps/issues) on GitHub.
+For questions or corrections, please [open an issue](https://github.com/98labs/philippines-json-maps/issues) on GitHub.
