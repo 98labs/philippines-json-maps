@@ -175,28 +175,28 @@ const map1 = document.getElementById('map1');
 // Load data when map is ready
 map1.addEventListener('map-ready', () =&gt; {
     map1.setData({
-        'PH01': 5.3,  // Ilocos Region
-        'PH02': 3.7,  // Cagayan Valley
-        'PH03': 12.4, // Central Luzon
-        'PH04': 16.2, // CALABARZON
-        'PH05': 6.1,  // Bicol Region
-        'PH06': 7.9,  // Western Visayas
-        'PH07': 8.1,  // Central Visayas
-        'PH08': 4.5,  // Eastern Visayas
-        'PH09': 3.8,  // Zamboanga Peninsula
-        'PH10': 5.2,  // Northern Mindanao
-        'PH11': 5.6,  // Davao Region
-        'PH12': 4.9,  // SOCCSKSARGEN
-        'PH13': 13.9, // NCR
-        'PH14': 1.8,  // CAR
-        'PH16': 2.8,  // Caraga
-        'PH17': 3.2,  // MIMAROPA
-        'PH19': 4.1   // BARMM
+        'PH01': 5.3,
+        'PH02': 3.7,
+        'PH03': 12.4,
+        'PH04': 16.2,
+        'PH05': 6.1,
+        'PH06': 7.9,
+        'PH07': 8.1,
+        'PH08': 4.5,
+        'PH09': 3.8,
+        'PH10': 5.2,
+        'PH11': 5.6,
+        'PH12': 4.9,
+        'PH13': 13.9,
+        'PH14': 1.8,
+        'PH16': 2.8,
+        'PH17': 3.2,
+        'PH19': 4.1
     });
 });
 
-// Default behavior: tooltips show on hover
-// No need to set show-tooltips="true"
+// Tooltips enabled by default
+// Info panel shows data on hover
 &lt;/script&gt;</code></pre>
                 </div>
             </div>
@@ -238,29 +238,30 @@ const map2 = document.getElementById('map2');
 // Load data when map is ready
 map2.addEventListener('map-ready', () =&gt; {
     map2.setData({
-        'PH01': 432.5,  // Ilocos Region
-        'PH02': 286.3,  // Cagayan Valley
-        'PH03': 1876.4, // Central Luzon
-        'PH04': 2453.7, // CALABARZON
-        'PH05': 398.2,  // Bicol Region
-        'PH06': 612.8,  // Western Visayas
-        'PH07': 743.9,  // Central Visayas
-        'PH08': 289.1,  // Eastern Visayas
-        'PH09': 234.6,  // Zamboanga Peninsula
-        'PH10': 412.3,  // Northern Mindanao
-        'PH11': 589.7,  // Davao Region
-        'PH12': 387.2,  // SOCCSKSARGEN
-        'PH13': 7823.6, // NCR
-        'PH14': 156.4,  // CAR
-        'PH16': 234.8,  // Caraga
-        'PH17': 267.3,  // MIMAROPA
-        'PH19': 312.5   // BARMM
+        'PH01': 432.5,
+        'PH02': 286.3,
+        'PH03': 1876.4,
+        'PH04': 2453.7,
+        'PH05': 398.2,
+        'PH06': 612.8,
+        'PH07': 743.9,
+        'PH08': 289.1,
+        'PH09': 234.6,
+        'PH10': 412.3,
+        'PH11': 589.7,
+        'PH12': 387.2,
+        'PH13': 7823.6,
+        'PH14': 156.4,
+        'PH16': 234.8,
+        'PH17': 267.3,
+        'PH19': 312.5
     });
 });
 
-// Toggle labels programmatically
-map2.toggleLabels(true);  // Show labels
-map2.toggleLabels(false); // Hide labels
+// Labels shown via show-labels="true" attribute
+// Can also toggle programmatically:
+// map2.toggleLabels(true);  // Show labels
+// map2.toggleLabels(false); // Hide labels
 &lt;/script&gt;</code></pre>
                 </div>
             </div>
@@ -299,21 +300,37 @@ map2.toggleLabels(false); // Hide labels
 &lt;script&gt;
 const map3 = document.getElementById('map3');
 
-// Disable tooltips (only info panel shows data)
-// set show-tooltips="false" in HTML
+// Load data when map is ready
+map3.addEventListener('map-ready', () =&gt; {
+    map3.setData({
+        'PH01028': 287, 'PH01029': 312, 'PH01033': 445, 'PH01055': 678,
+        'PH02009': 89, 'PH02015': 234, 'PH02031': 298, 'PH02050': 156, 'PH02057': 123,
+        'PH03008': 456, 'PH03014': 892, 'PH03049': 567, 'PH03054': 1234, 'PH03069': 398, 'PH03071': 289, 'PH03077': 178,
+        'PH04010': 789, 'PH04021': 1456, 'PH04034': 1123, 'PH04056': 423, 'PH04058': 1678,
+        'PH05005': 567, 'PH05016': 234, 'PH05017': 456, 'PH05020': 189, 'PH05041': 278, 'PH05062': 345,
+        'PH06004': 412, 'PH06006': 198, 'PH06019': 289, 'PH06030': 678, 'PH06045': 567, 'PH06079': 234,
+        'PH07012': 445, 'PH07022': 923, 'PH07046': 389, 'PH07061': 267,
+        'PH08026': 198, 'PH08037': 334, 'PH08048': 156, 'PH08060': 223, 'PH08064': 189, 'PH08078': 198,
+        'PH09072': 267, 'PH09073': 289, 'PH09083': 234, 'PH09097': 456,
+        'PH10013': 312, 'PH10018': 178, 'PH10035': 298, 'PH10042': 267, 'PH10043': 445,
+        'PH11023': 389, 'PH11024': 412, 'PH11025': 298, 'PH11082': 267, 'PH11086': 189,
+        'PH12047': 356, 'PH12063': 398, 'PH12065': 278, 'PH12080': 312,
+        'PH13039': 18000, 'PH13074': 19000, 'PH13075': 20000, 'PH13076': 21000,
+        'PH14001': 123, 'PH14011': 234, 'PH14027': 156, 'PH14032': 178, 'PH14044': 145, 'PH14081': 112,
+        'PH16002': 234, 'PH16003': 189, 'PH16067': 267, 'PH16068': 223, 'PH16085': 198,
+        'PH17040': 289, 'PH17051': 234, 'PH17052': 267, 'PH17053': 198, 'PH17059': 223,
+        'PH19007': 178, 'PH19036': 234, 'PH19066': 198, 'PH19070': 156, 'PH19087': 267, 'PH19088': 245, 'PH19099': 189
+    });
+});
 
-// Or toggle programmatically:
+// Tooltips disabled, but info panel still works
+// Toggle programmatically:
 map3.toggleTooltips(false); // Disable tooltips
-map3.toggleTooltips(true);  // Enable tooltips
-
-// Combine labels and tooltips:
 map3.toggleLabels(true);    // Show permanent labels
-map3.toggleTooltips(false); // Disable hover tooltips
 
 // Listen to events
 map3.addEventListener('region-click', (event) =&gt; {
-    const feature = event.detail.feature;
-    console.log('Clicked province:', feature.ADM2_EN);
+    console.log('Clicked:', event.detail.feature.ADM2_EN);
 });
 &lt;/script&gt;</code></pre>
                 </div>
@@ -323,6 +340,7 @@ map3.addEventListener('region-click', (event) =&gt; {
 
     <!-- Load the web component -->
     <script src="../components/philippines-map.js"></script>
+    <script src="provinces-data.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
 
@@ -374,6 +392,30 @@ map3.addEventListener('region-click', (event) =&gt; {
                 'PH16': 234.8,
                 'PH17': 267.3,
                 'PH19': 312.5
+            });
+        });
+
+        // Sample data for map 3 (provinces - level 2)
+        // Population density data for all provinces (people per sq km)
+        map3.addEventListener('map-ready', () => {
+            map3.setData({
+                'PH01028': 287, 'PH01029': 312, 'PH01033': 445, 'PH01055': 678,
+                'PH02009': 89, 'PH02015': 234, 'PH02031': 298, 'PH02050': 156, 'PH02057': 123,
+                'PH03008': 456, 'PH03014': 892, 'PH03049': 567, 'PH03054': 1234, 'PH03069': 398, 'PH03071': 289, 'PH03077': 178,
+                'PH04010': 789, 'PH04021': 1456, 'PH04034': 1123, 'PH04056': 423, 'PH04058': 1678,
+                'PH05005': 567, 'PH05016': 234, 'PH05017': 456, 'PH05020': 189, 'PH05041': 278, 'PH05062': 345,
+                'PH06004': 412, 'PH06006': 198, 'PH06019': 289, 'PH06030': 678, 'PH06045': 567, 'PH06079': 234,
+                'PH07012': 445, 'PH07022': 923, 'PH07046': 389, 'PH07061': 267,
+                'PH08026': 198, 'PH08037': 334, 'PH08048': 156, 'PH08060': 223, 'PH08064': 189, 'PH08078': 198,
+                'PH09072': 267, 'PH09073': 289, 'PH09083': 234, 'PH09097': 456,
+                'PH10013': 312, 'PH10018': 178, 'PH10035': 298, 'PH10042': 267, 'PH10043': 445,
+                'PH11023': 389, 'PH11024': 412, 'PH11025': 298, 'PH11082': 267, 'PH11086': 189,
+                'PH12047': 356, 'PH12063': 398, 'PH12065': 278, 'PH12080': 312,
+                'PH13039': 18000, 'PH13074': 19000, 'PH13075': 20000, 'PH13076': 21000,
+                'PH14001': 123, 'PH14011': 234, 'PH14027': 156, 'PH14032': 178, 'PH14044': 145, 'PH14081': 112,
+                'PH16002': 234, 'PH16003': 189, 'PH16067': 267, 'PH16068': 223, 'PH16085': 198,
+                'PH17040': 289, 'PH17051': 234, 'PH17052': 267, 'PH17053': 198, 'PH17059': 223,
+                'PH19007': 178, 'PH19036': 234, 'PH19066': 198, 'PH19070': 156, 'PH19087': 267, 'PH19088': 245, 'PH19099': 189
             });
         });
 

@@ -17,6 +17,8 @@ class PhilippinesMap extends HTMLElement {
         this.map = null;
         this.geojsonLayer = null;
         this.infoControl = null;
+        this.isLoading = false;
+        this.isInitialized = false;
     }
 
     static get observedAttributes() {
@@ -56,18 +58,34 @@ class PhilippinesMap extends HTMLElement {
                 #map {
                     width: 100%;
                     height: ${height};
+                    position: relative;
+                }
+                :host ::ng-deep .leaflet-control {
+                    z-index: 1000;
+                }
+                .leaflet-top.leaflet-right {
+                    top: 10px;
+                    right: 10px;
+                }
+                .leaflet-bottom.leaflet-right {
+                    bottom: 10px;
+                    right: 10px;
                 }
                 .info {
-                    padding: 6px 8px;
+                    padding: 10px 12px;
                     font: 14px/16px Arial, Helvetica, sans-serif;
                     background: white;
-                    background: rgba(255,255,255,0.9);
-                    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-                    border-radius: 5px;
+                    background: rgba(255,255,255,0.95);
+                    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+                    border-radius: 8px;
+                    border: 2px solid #666;
+                    min-width: 200px;
                 }
                 .info h4 {
-                    margin: 0 0 5px;
-                    color: #777;
+                    margin: 0 0 8px;
+                    color: #333;
+                    font-weight: bold;
+                    font-size: 15px;
                 }
                 .legend {
                     line-height: 18px;
@@ -163,22 +181,53 @@ class PhilippinesMap extends HTMLElement {
 
     async loadMap() {
         // Wait for Leaflet to be available
-        if (typeof L === 'undefined') {
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-            script.onload = () => this.initializeMap();
-            document.head.appendChild(script);
-        } else {
-            this.initializeMap();
+        await this.ensureLeafletLoaded();
+        this.initializeMap();
+    }
+
+    async ensureLeafletLoaded() {
+        // If Leaflet is already loaded, return immediately
+        if (typeof L !== 'undefined') {
+            return Promise.resolve();
         }
+
+        // Check if Leaflet is currently being loaded
+        if (!window.__leafletLoadingPromise) {
+            window.__leafletLoadingPromise = new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+                script.onload = () => resolve();
+                script.onerror = () => reject(new Error('Failed to load Leaflet'));
+                document.head.appendChild(script);
+            });
+        }
+
+        return window.__leafletLoadingPromise;
     }
 
     async initializeMap() {
+        // Prevent multiple simultaneous initializations
+        if (this.isLoading) {
+            return;
+        }
+
+        this.isLoading = true;
+
         const mapElement = this.shadowRoot.getElementById('map');
+
+        // Ensure map element exists
+        if (!mapElement) {
+            console.error('Map element not found');
+            this.isLoading = false;
+            return;
+        }
 
         // Clear existing map if any
         if (this.map) {
             this.map.remove();
+            this.map = null;
+            this.geojsonLayer = null;
+            this.infoControl = null;
         }
 
         // Initialize map
@@ -284,8 +333,13 @@ class PhilippinesMap extends HTMLElement {
                 composed: true
             }));
 
+            // Mark as initialized
+            this.isInitialized = true;
+            this.isLoading = false;
+
         } catch (error) {
             console.error('Error loading map data:', error);
+            this.isLoading = false;
             this.dispatchEvent(new CustomEvent('map-error', {
                 detail: { error },
                 bubbles: true,
@@ -363,8 +417,10 @@ class PhilippinesMap extends HTMLElement {
 
     addInfoControl() {
         const InfoControl = L.Control.extend({
-            onAdd: (map) => {
+            onAdd: function(map) {
                 this._div = L.DomUtil.create('div', 'info');
+                this._div.style.display = 'block';
+                this._div.style.visibility = 'visible';
                 this.update();
                 return this._div;
             }
@@ -379,9 +435,9 @@ class PhilippinesMap extends HTMLElement {
             this.infoControl._div.innerHTML = `<h4>${title}</h4>` +
                 (props ?
                     `<b>${this.getFeatureName(props)}</b><br />` +
-                    `${valueName}: ${props.dataValue !== undefined ? props.dataValue.toFixed(2) : 'N/A'}<br />` +
+                    `${valueName}: <strong>${props.dataValue !== undefined ? props.dataValue.toFixed(2) : 'N/A'}</strong><br />` +
                     `Area: ${props.AREA_SQKM ? props.AREA_SQKM.toFixed(2) : 'N/A'} km²`
-                    : 'Hover over a region');
+                    : '<i>Hover over a region</i>');
         };
 
         this.infoControl.addTo(this.map);
