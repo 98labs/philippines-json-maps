@@ -151,8 +151,8 @@ Make sure you download:
 If you encounter issues downloading or using the source data:
 
 1. **Check UN OCHA Status**: https://data.humdata.org/
-2. **Report Issues**: https://github.com/faeldon/philippines-json-maps/issues
-3. **Discussions**: https://github.com/faeldon/philippines-json-maps/discussions
+2. **Report Issues**: https://github.com/98labs/philippines-json-maps/issues
+3. **Discussions**: https://github.com/98labs/philippines-json-maps/discussions
 
 ---
 

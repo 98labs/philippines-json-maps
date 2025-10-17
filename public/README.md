@@ -252,7 +252,7 @@ MIT License - Free to use in your projects
 
 ## 🔗 Links
 
-- **Source Repository**: https://github.com/faeldon/philippines-json-maps
+- **Source Repository**: https://github.com/98labs/philippines-json-maps
 - **Data Source**: UN OCHA (PSA/NAMRIA 2023 Q4)
 - **Leaflet.js**: https://leafletjs.com/
 - **OpenStreetMap**: https://www.openstreetmap.org/

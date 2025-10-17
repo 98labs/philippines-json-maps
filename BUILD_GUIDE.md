@@ -151,7 +151,7 @@ cp -r shapefiles/*.zip /path/to/philippines-json-maps/
 
 ```bash
 # If cloning fresh
-git clone https://github.com/faeldon/philippines-json-maps.git
+git clone https://github.com/98labs/philippines-json-maps.git
 cd philippines-json-maps
 
 # Or navigate to existing clone
@@ -721,8 +721,8 @@ See **[DEMO_GUIDE.md](DEMO_GUIDE.md)** for:
 
 Need help?
 
-- **Issues**: https://github.com/faeldon/philippines-json-maps/issues
-- **Discussions**: https://github.com/faeldon/philippines-json-maps/discussions
+- **Issues**: https://github.com/98labs/philippines-json-maps/issues
+- **Discussions**: https://github.com/98labs/philippines-json-maps/discussions
 - **Email**: See GitHub profile
 
 ---

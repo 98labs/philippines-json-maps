@@ -489,12 +489,12 @@ Initial legacy release with 2011 data.
 ## Project Information
 
 **Project**: Philippines JSON Maps
-**Repository**: https://github.com/faeldon/philippines-json-maps
+**Repository**: https://github.com/98labs/philippines-json-maps
 **License**: MIT
 **Current Version**: 2.0.0
 **Data Source**: UN OCHA Humanitarian Data Exchange (PSA/NAMRIA 2023 Q4 shapefiles)
 **Last Updated**: October 16, 2024
-**Maintained By**: faeldon and contributors
+**Maintained By**: 98LABS and contributors
 
 ## Contributors
 
@@ -504,9 +504,9 @@ Initial legacy release with 2011 data.
 
 ## Links
 
-- **Repository**: https://github.com/faeldon/philippines-json-maps
-- **Issues**: https://github.com/faeldon/philippines-json-maps/issues
-- **Discussions**: https://github.com/faeldon/philippines-json-maps/discussions
+- **Repository**: https://github.com/98labs/philippines-json-maps
+- **Issues**: https://github.com/98labs/philippines-json-maps/issues
+- **Discussions**: https://github.com/98labs/philippines-json-maps/discussions
 - **PSGC Official**: https://psa.gov.ph/classification/psgc/
 - **UN OCHA Data**: https://data.humdata.org/dataset/philippines-administrative-boundaries
 
@@ -622,8 +622,8 @@ Initial legacy release with 2011 data.
 
 Found an issue or have a question?
 
-- **Report Bugs**: [GitHub Issues](https://github.com/faeldon/philippines-json-maps/issues)
-- **Ask Questions**: [GitHub Discussions](https://github.com/faeldon/philippines-json-maps/discussions)
+- **Report Bugs**: [GitHub Issues](https://github.com/98labs/philippines-json-maps/issues)
+- **Ask Questions**: [GitHub Discussions](https://github.com/98labs/philippines-json-maps/discussions)
 - **Contribute**: See [Contributing Guidelines](.github/CODE_OF_CONDUCT.md)
 - **Documentation**: Check README.md, DEMO_GUIDE.md, or CLAUDE.md
 

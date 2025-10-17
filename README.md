@@ -1,6 +1,6 @@
 # Philippines Administrative Boundaries JSON Maps
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/98labs/philippines-json-maps/master/LICENSE)
 [![PSGC Version](https://img.shields.io/badge/PSGC-Q4_2023-green.svg)](https://psa.gov.ph/classification/psgc/)
 [![Data Source](https://img.shields.io/badge/Source-UN_OCHA-blue.svg)](https://data.humdata.org/dataset/philippines-administrative-boundaries)
 
@@ -88,16 +88,16 @@ administrative levels.
 For example, the regions map will show regional boundaries on the
 entire country. Shown below rendered using [geojson.io](www.geojson.io).
 
-<img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/regions.png" width="300">
+<img src="https://raw.githubusercontent.com/98labs/philippines-json-maps/master/images/regions.png" width="300">
 
 While the each of the provinces map will show provincial boundaries
 in a region.
 
-<img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/province.png" width="300">
+<img src="https://raw.githubusercontent.com/98labs/philippines-json-maps/master/images/province.png" width="300">
 
 Same with municipalities and cities and barangays.
 
-<img src="https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/images/municity.png" width="300">
+<img src="https://raw.githubusercontent.com/98labs/philippines-json-maps/master/images/municity.png" width="300">
 
 ## 🎮 Interactive Demos
 
@@ -382,7 +382,7 @@ function PhilippinesMap() {
 
 Contributions are welcome! Here's how you can help:
 
-- 🐛 **Report Issues**: Found incorrect boundaries or data errors? [Open an issue](https://github.com/faeldon/philippines-json-maps/issues)
+- 🐛 **Report Issues**: Found incorrect boundaries or data errors? [Open an issue](https://github.com/98labs/philippines-json-maps/issues)
 - 💡 **Suggest Features**: Have ideas for improvements? Share them!
 - 🔧 **Submit Pull Requests**: Fix bugs or add features
 - 📖 **Improve Documentation**: Help make the docs clearer
@@ -417,9 +417,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 📞 Support
 
-- 📋 **Issues**: [GitHub Issues](https://github.com/faeldon/philippines-json-maps/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/faeldon/philippines-json-maps/discussions)
-- 📧 **Email**: See [GitHub profile](https://github.com/faeldon)
+- 📋 **Issues**: [GitHub Issues](https://github.com/98labs/philippines-json-maps/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/98labs/philippines-json-maps/discussions)
 
 ---
 
